@@ -44,3 +44,20 @@ section.guess-blocks > span{
   border-style: inset;
   margin-bottom: 5px;
 }
+
+section.keyboard{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  max-width: 50%;
+}
+
+section.keyboard > button{
+  min-height: 5vh;
+  min-width: 3vw;
+  font-family: "Press Start 2P", serif;
+  border-radius: 5px;
+  background-color: #aacefd;
+}
