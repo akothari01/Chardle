@@ -1,15 +1,14 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import WordGuess from './components/WordGuess'
+import Keyboard from './components/Keyboard'
 
-function App() {
-
+export default function App() {
+  const [wordToGuess, setWordToGuess] = useState("DEATHSTRANDING")
+  const [guesses, setGuesses] = useState(Array(wordToGuess.length * 6).fill('-1'))
   return (
-    <main>
-      hi
+    <main className='main-content'>
+      <WordGuess gridSize={guesses}/>
+      <Keyboard/>
     </main>
   )
 }
-
-export default App
