@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  background-color:  #071422 ;
+  background-color:  #062444 ;
   color: #D9D9D9;
   padding: 20px;
   height: 100vh;
@@ -33,7 +33,7 @@ section.guess-blocks{
 }
 
 section.guess-blocks > span{
-  background-color: #2a475e ;
+  background-color: #2b475f ;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,7 +51,7 @@ section.keyboard{
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  max-width: 50%;
+  max-width: 35%;
 }
 
 section.keyboard > button{
