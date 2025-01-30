@@ -9,7 +9,7 @@ export default function WordGuess(props){
         <section style={gridDimension} className="guess-blocks">
             {
                 props.gridSize.map((letter, index) => (
-                    <span key={index}>{letter}</span>
+                    <span style={{backgroundColor: props.coloring[index]}} key={index}>{letter}</span>
                 ))
             }
         </section>
