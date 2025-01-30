@@ -2,7 +2,7 @@ export default function Keyboard(props){
     const keys = "1234567890qwertyuiopasdfghjklzxcvbnm"
     return(
         <section className="keyboard">
-            <button style={{backgroundColor:"#f54248"}}>DLT</button>
+            <button onClick={props.del} style={{backgroundColor:"#f54248"}}>DLT</button>
             {
                 keys.split('').map(letter => (
                     <button onClick={() => (props.typing)(letter)} key={letter}>{letter}</button>

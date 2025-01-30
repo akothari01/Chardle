@@ -18,10 +18,23 @@ export default function App() {
     }
   }
 
+  function deleteInput(){
+    console.log(index)
+    console.log(!(index % wordToGuess.length === 0))
+    const newIndex = !(index % (wordToGuess.length-1) === 0) ? index - 1 : index
+    setIndex(prevIndex => !(index % (wordToGuess.length-1) === 0) ? prevIndex - 1 : prevIndex)
+    console.log(index)
+    setGuesses(prevGuess => {
+      const newGuess = [...prevGuess]
+      newGuess[newIndex] = ''
+      return newGuess
+    })
+  }
+
   return (
     <main className='main-content'>
       <WordGuess gridSize={guesses}/>
-      <Keyboard typing={handleTyping}/>
+      <Keyboard typing={handleTyping} del={deleteInput}/>
     </main>
   )
 }
