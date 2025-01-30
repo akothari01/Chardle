@@ -7,7 +7,10 @@ export default function App() {
   const [guesses, setGuesses] = useState(Array(wordToGuess.length * 6).fill(''))
   const [index, setIndex] = useState(0)
   const[currentGuess, setCurrentGuess] = useState(1)
-  const[guessCorrect, setGuessCorrect] = useState(Array(wordToGuess.length * 6).fill('#2b475f'))
+  const[guessCorrect, setGuessCorrect] = useState(Array(wordToGuess.length * 6).fill('#9cb7db'))
+  const [gameWon, setGameWon] = useState(false)
+  const gameLost = index > wordToGuess.length*6-1
+  const gameOver = gameWon || gameLost
 
   function handleTyping(letter){
     if(index < currentGuess * wordToGuess.length){
@@ -31,26 +34,28 @@ export default function App() {
   }
 
   function enterInput(){
-    if(index === currentGuess*wordToGuess.length){
-      const guess = guesses
-      setGuessCorrect(prevCor => {
-        const newCor = [...prevCor]
-        const word = wordToGuess.split('')
-        for(let i = index - wordToGuess.length; i <= index-1; i++){
-          if(guess[i] === word[i%wordToGuess.length]){
-            newCor[i] = '#34eb6b'
+    if(!gameOver){
+      if(index === currentGuess*wordToGuess.length){
+        const guess = guesses
+        setGuessCorrect(prevCor => {
+          const newCor = [...prevCor]
+          const word = wordToGuess.split('')
+          for(let i = index - wordToGuess.length; i <= index-1; i++){
+            if(guess[i] === word[i%wordToGuess.length]){
+              newCor[i] = '#34eb6b'
+            }
+            else if(word.includes(guess[i])){
+              newCor[i] = '#ebcf34'
+            }
+            else{
+              newCor[i] = '#747877'
+            }
           }
-          else if(word.includes(guess[i])){
-            newCor[i] = '#ebcf34'
-          }
-          else{
-            newCor[i] = '#747877'
-          }
-        }
-        return newCor
-      })
-      setCurrentGuess(prevGuess => prevGuess + 1)
-    } 
+          return newCor
+        })
+        setCurrentGuess(prevGuess => prevGuess + 1)
+      }
+    }
   }
 
 
