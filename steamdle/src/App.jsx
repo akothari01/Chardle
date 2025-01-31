@@ -2,6 +2,7 @@ import { useState } from 'react'
 import {useEffect} from 'react'
 import WordGuess from './components/WordGuess'
 import Keyboard from './components/Keyboard'
+import GameOver from './components/GameOver'
 import Confetti from 'react-confetti'
 
 export default function App() {
@@ -9,10 +10,18 @@ export default function App() {
   const [guesses, setGuesses] = useState(Array(wordToGuess.length * 6).fill(''))
   const [index, setIndex] = useState(0)
   const[currentGuess, setCurrentGuess] = useState(1)
-  const[guessCorrect, setGuessCorrect] = useState(Array(wordToGuess.length * 6).fill('#9cb7db'))
+  const[guessCorrect, setGuessCorrect] = useState(Array(wordToGuess.length * 6).fill('#c73858'))
   const [gameWon, setGameWon] = useState(false)
+  const [openStatus, setOpenStatus] = useState(false)
   const gameLost = index >= wordToGuess.length*6+1
   const gameOver = gameWon || gameLost
+  
+  
+  useEffect(() => {if(currentGuess > 6 || gameWon){
+    setTimeout(() => {
+      setOpenStatus(true)
+    }, 100);
+  }}, [openStatus, gameWon, currentGuess])
 
   function handleTyping(letter){
     if(!gameOver && index < wordToGuess.length*6){
@@ -66,6 +75,16 @@ export default function App() {
         setCurrentGuess(prevGuess => prevGuess + 1)
       }
     }
+    console.log(index>=wordToGuess.length*6)
+  }
+
+  function restartGame(){
+    setOpenStatus(false)
+    setGuesses(Array(wordToGuess.length * 6).fill(''))
+    setCurrentGuess(1)
+    setGuessCorrect(Array(wordToGuess.length * 6).fill('#c73858'))
+    setGameWon(false)
+    setIndex(0)
   }
 
   useEffect(() => {
@@ -87,8 +106,8 @@ export default function App() {
   }, [guesses, currentGuess])
 
   return (
+    openStatus ? <GameOver gameState={gameWon} answer={wordToGuess} startOver={restartGame}/> :
     <main className='main-content'>
-      {gameWon ? <Confetti/> : undefined}
       <WordGuess gridSize={guesses} coloring={guessCorrect}/>
       <Keyboard typing={handleTyping} del={deleteInput} ent={enterInput}/>
     </main>
