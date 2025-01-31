@@ -3,7 +3,7 @@ import {useEffect} from 'react'
 import WordGuess from './components/WordGuess'
 import Keyboard from './components/Keyboard'
 import GameOver from './components/GameOver'
-import Confetti from 'react-confetti'
+import StartScreen from './components/StartScreen'
 
 export default function App() {
   const [wordToGuess, setWordToGuess] = useState("sonic")
@@ -13,15 +13,33 @@ export default function App() {
   const[guessCorrect, setGuessCorrect] = useState(Array(wordToGuess.length * 6).fill('#c73858'))
   const [gameWon, setGameWon] = useState(false)
   const [openStatus, setOpenStatus] = useState(false)
+  const [startGame, setStartGame] = useState(true)
+  const [characters, setCharacters] = useState([])
+  const [characterTracker, setCharacterTracker] = useState(0)
   const gameLost = index >= wordToGuess.length*6+1
   const gameOver = gameWon || gameLost
+
+  useEffect(()=>{
+    const charArr = []
+    fetch('https://api.jikan.moe/v4/top/characters')
+    .then(res => (res.json()))
+    .then(data => {
+      data.data.map((data) => {
+        charArr.push(data.name.includes(' ') ? data.name.slice(0,data.name.indexOf(' ')).toLowerCase() : data.name.toLowerCase())
+      })
+    })
+    console.log(charArr)
+    setCharacters(charArr)
+  }, [])
+
   
-  
-  useEffect(() => {if(currentGuess > 6 || gameWon){
-    setTimeout(() => {
-      setOpenStatus(true)
-    }, 100);
-  }}, [openStatus, gameWon, currentGuess])
+  function starting(){
+    setStartGame(false)
+    setWordToGuess(characters[characterTracker])
+    setGuesses(Array(characters[characterTracker].length * 6).fill(''))
+    setGuessCorrect(Array(characters[characterTracker].length * 6).fill('#c73858'))
+    setCharacterTracker(prevTracker => prevTracker + 1)
+  }
 
   function handleTyping(letter){
     if(!gameOver && index < wordToGuess.length*6){
@@ -80,9 +98,11 @@ export default function App() {
 
   function restartGame(){
     setOpenStatus(false)
-    setGuesses(Array(wordToGuess.length * 6).fill(''))
+    setGuesses(Array(characters[characterTracker].length * 6).fill(''))
     setCurrentGuess(1)
-    setGuessCorrect(Array(wordToGuess.length * 6).fill('#c73858'))
+    setGuessCorrect(Array(characters[characterTracker].length * 6).fill('#c73858'))
+    setWordToGuess(characters[characterTracker])
+    setCharacterTracker(prevTrack => prevTrack + 1)
     setGameWon(false)
     setIndex(0)
   }
@@ -105,8 +125,14 @@ export default function App() {
     }
   }, [guesses, currentGuess])
 
+  useEffect(() => {if(currentGuess > 6 || gameWon){
+    setTimeout(() => {
+      setOpenStatus(true)
+    }, 100);
+  }}, [openStatus, gameWon, currentGuess])
+
   return (
-    openStatus ? <GameOver gameState={gameWon} answer={wordToGuess} startOver={restartGame}/> :
+    startGame ? <StartScreen starting={starting}/> : openStatus ? <GameOver gameState={gameWon} answer={wordToGuess} startOver={restartGame}/> :
     <main className='main-content'>
       <WordGuess gridSize={guesses} coloring={guessCorrect}/>
       <Keyboard typing={handleTyping} del={deleteInput} ent={enterInput}/>

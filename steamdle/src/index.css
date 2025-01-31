@@ -6,7 +6,7 @@ body {
   margin: 0;
   background-color:  #322736 ;
   color: #D9D9D9;
-  padding: 20px;
+
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -27,6 +27,35 @@ section.game-over-window{
   min-height: 10vh;
   border-radius: 10px;
   padding: 10px 10px;
+}
+
+section.start-screen{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color:  #322736 ;
+  color: rgb(253, 166, 166);
+  min-width: 100vw;
+  min-height: 100vh;
+  border-radius: 10px;
+}
+
+section.start-screen > h1{
+  font-size: 15rem;
+  margin-bottom:0;
+}
+
+section.start-screen > h3{
+  font-size: 4rem;
+}
+
+section.start-screen > button{
+  font-size: 5rem;
+  font-family: "DotGothic16", serif;
+  border-radius: 10px;
+  font-weight: bold;
+  background-color: #da7b22;
 }
 
 section.game-over-window > button{

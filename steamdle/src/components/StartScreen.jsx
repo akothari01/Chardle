@@ -1,7 +1,9 @@
-export default function StartScreen(){
-    <section>
+export default function StartScreen(props){
+    return(
+    <section className="start-screen">
         <h1>Chardle</h1>
-        <h3>Put your anime character knowledge to the test with good deductive reasoning skills!</h3>
-        <button>LETS GO</button>
+        <h3>Wordle with your favorite characters!</h3>
+        <button onClick={props.starting}>lets go</button>
     </section>
+    )
 }
