@@ -1,2 +1,2 @@
-# Steamdle
- wordle with your steam library
+# Chardle
+ wordle with your favorite characters
