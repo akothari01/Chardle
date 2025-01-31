@@ -15,7 +15,6 @@ export default function App() {
   const [openStatus, setOpenStatus] = useState(false)
   const [startGame, setStartGame] = useState(true)
   const [characters, setCharacters] = useState([])
-  const [characterTracker, setCharacterTracker] = useState(0)
   const gameLost = index >= wordToGuess.length*6+1
   const gameOver = gameWon || gameLost
 
@@ -35,10 +34,9 @@ export default function App() {
   
   function starting(){
     setStartGame(false)
-    setWordToGuess(characters[characterTracker])
-    setGuesses(Array(characters[characterTracker].length * 6).fill(''))
-    setGuessCorrect(Array(characters[characterTracker].length * 6).fill('#c73858'))
-    setCharacterTracker(prevTracker => prevTracker + 1)
+    setWordToGuess(characters[0])
+    setGuesses(Array(characters[0].length * 6).fill(''))
+    setGuessCorrect(Array(characters[0].length * 6).fill('#c73858'))
   }
 
   function handleTyping(letter){
@@ -97,12 +95,12 @@ export default function App() {
   }
 
   function restartGame(){
+    const characterTracker = Math.floor(Math.random() * 25)
     setOpenStatus(false)
     setGuesses(Array(characters[characterTracker].length * 6).fill(''))
     setCurrentGuess(1)
     setGuessCorrect(Array(characters[characterTracker].length * 6).fill('#c73858'))
     setWordToGuess(characters[characterTracker])
-    setCharacterTracker(prevTrack => prevTrack + 1)
     setGameWon(false)
     setIndex(0)
   }
