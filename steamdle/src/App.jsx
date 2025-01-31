@@ -15,7 +15,6 @@ export default function App() {
   const gameOver = gameWon || gameLost
 
   function handleTyping(letter){
-    console.log(letter)
     if(!gameOver && index < wordToGuess.length*6){
     if(index < currentGuess * wordToGuess.length){
       setGuesses(prevGuess => {
@@ -41,7 +40,6 @@ export default function App() {
   }
 
   function enterInput(){
-    console.log(gameOver)
     if(!gameOver){
       if(index === currentGuess*wordToGuess.length){
         const guess = guesses
