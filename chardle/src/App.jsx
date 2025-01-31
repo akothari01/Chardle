@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import {useEffect} from 'react'
-import WordGuess from './components/WordGuess'
-import Keyboard from './components/Keyboard'
-import GameOver from './components/GameOver'
-import StartScreen from './components/StartScreen'
+import WordGuess from './components/WordGuess.jsx'
+import Keyboard from './components/Keyboard.jsx'
+import GameOver from './components/GameOver.jsx'
+import StartScreen from './components/StartScreen.jsx'
 
 export default function App() {
   const [wordToGuess, setWordToGuess] = useState("sonic")
